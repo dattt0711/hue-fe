@@ -11,6 +11,7 @@ import Card from './components/Card'
 function Product() {
   const [show, setShow] = useState(false);
   const handleCloseModal = () => {
+    console.log()
     setShow(false);
   }
   const handleSubmit = () => {
