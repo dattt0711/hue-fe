@@ -5,3 +5,11 @@
 .product-filter-price input {
     width: 20px;
 }
+
+.black-color {
+    color: #000;
+}
+
+.related-product {
+    background: #F3EEE9;
+}

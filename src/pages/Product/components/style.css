@@ -2,7 +2,22 @@
   .product-text-category {
     display: none;
   }
+
   .product-1 {
     margin-bottom: 25px;
   }
+}
+
+.card {
+  color: #000;
+  box-sizing: border-box;
+  background: #EFE6DE;
+}
+
+.card-image img {
+  transition: transform 0.3s ease;
+}
+
+.card-image img:hover {
+  transform: scale(1.2);
 }

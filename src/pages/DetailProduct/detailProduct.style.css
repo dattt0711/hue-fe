@@ -43,3 +43,42 @@
     flex-direction: column;
   }
 }
+
+.product-detail {
+  color: #000;
+}
+
+.favorites {
+  border-bottom: 1px solid #000;
+}
+
+.btn-qty {
+  border: 1px solid #000 !important;
+  border-radius: 0px !important;
+
+}
+
+.product-price {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.review {
+  border-bottom: 1px solid #000;
+}
+
+.rating-star {
+  display: inline-block;
+}
+
+.star {
+  cursor: pointer;
+}
+
+.filled {
+  color: gold;
+}
+
+.empty {
+  color: gray;
+}

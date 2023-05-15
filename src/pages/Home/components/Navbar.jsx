@@ -36,7 +36,7 @@ function NavbarCommon() {
                     <Link to="/" className="text-dark" style={{ textDecoration: 'none' }}>Home</Link>
                   </Nav.Link>
                   <Nav.Link href="">
-                    <Link to="/intro" className="text-dark" style={{ textDecoration: 'none' }}>Products</Link>
+                    <Link to="/product" className="text-dark" style={{ textDecoration: 'none' }}>Products</Link>
                   </Nav.Link>
                   <Nav.Link>
                     <Link to="/product" className="text-dark" style={{ textDecoration: 'none' }}>Contacts</Link>

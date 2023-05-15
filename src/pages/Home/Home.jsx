@@ -12,11 +12,6 @@ function Home() {
   return (
     <div>
       <Banner />
-      <ListCardCategory />
-      <CarouselProduct name={'Sản phẩm của chúng tôi'} />
-      <Comment />
-      <Listbrand />
-      <News />
       <Footer />
     </div>
   )

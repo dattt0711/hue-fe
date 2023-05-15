@@ -7,20 +7,49 @@ import ProductInCategory from './components/ProductInCategory';
 import Description from './components/Description';
 import CarouselProduct from '../Home/components/CarouselProduct';
 import Footer from '../Home/components/Footer';
-
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Review from './components/Review';
+import Card from '../Product/components/Card'
 function DetailProduct() {
   return (
     <div className='detail-product'>
       <Container >
-        <div className='info-component d-flex '>
-          <ImageInfo />
-          <DetailInfo />
+        <Row>
+          <Col sm={6}>
+            <ImageInfo />
+          </Col>
+          <Col sm={6}>
+            <DetailInfo />
+          </Col>
+        </Row>
+        <div className="mt-5">
+          <h3 className="black-color">REVIEWS</h3>
+          <Review />
         </div>
-        <div className='describe-component d-flex justify-content-between' style={{ marginTop: '100px' }}>
-          <Description />
-          <ProductInCategory />
-        </div>
-        <CarouselProduct name={'CÓ THỂ BẠN QUAN TÂM'} />
+        <Container fluid className="related-product p-3 mt-5">
+          <Container>
+            <Row className="mb-4">
+              <h3 className="black-color">You may also like</h3>
+              <Container>
+                <Row>
+                  <Col sm={3}>
+                    <Card />
+                  </Col>
+                  <Col sm={3}>
+                    <Card />
+                  </Col>
+                  <Col sm={3}>
+                    <Card />
+                  </Col>
+                  <Col sm={3}>
+                    <Card />
+                  </Col>
+                </Row>
+              </Container>
+            </Row>
+          </Container>
+        </Container>
       </Container>
       <Footer />
     </div>
