@@ -6,7 +6,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import ProductImage from '../../../images/product.png';
 import Button from 'react-bootstrap/Button';
-function Card(props) {
+export default function CardComponent(props) {
+    const { dataItem, hello } = props;
     return (
         <div className="card">
             <div className="p-3">
@@ -14,10 +15,10 @@ function Card(props) {
             </div>
             <div className="card-body d-flex align-items-center flex-column">
                 <div className="card-image">
-                    <img src={ProductImage} alt="" />
+                    <img src={dataItem?.image} alt="" />
                 </div>
-                <h4 className="my-3">OAT ESSENTIAL WATER</h4>
-                <p>$49.98</p>
+                <h4 className="my-3">{dataItem?.productName}</h4>
+                <p>${dataItem?.price}</p>
                 <span>
                     <ControlPointIcon />
                 </span>
@@ -25,5 +26,3 @@ function Card(props) {
         </div>
     )
 }
-
-export default Card;

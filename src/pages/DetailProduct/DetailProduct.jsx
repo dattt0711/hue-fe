@@ -10,7 +10,7 @@ import Footer from '../Home/components/Footer';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Review from './components/Review';
-import Card from '../Product/components/Card'
+import CardComponent from '../Product/components/CardComponent'
 function DetailProduct() {
   return (
     <div className='detail-product'>
@@ -34,16 +34,16 @@ function DetailProduct() {
               <Container>
                 <Row>
                   <Col sm={3}>
-                    <Card />
+                    <CardComponent />
                   </Col>
                   <Col sm={3}>
-                    <Card />
+                    <CardComponent />
                   </Col>
                   <Col sm={3}>
-                    <Card />
+                    <CardComponent />
                   </Col>
                   <Col sm={3}>
-                    <Card />
+                    <CardComponent />
                   </Col>
                 </Row>
               </Container>
