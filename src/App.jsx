@@ -3,7 +3,6 @@ import './App.css';
 import NavbarCommon from './pages/Home/components/Navbar';
 import Home from './pages/Home/Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { store } from './reduxSaga/store';
 import { Provider } from "react-redux";
 import Product from './pages/Product/Product';
 import Cart from './pages/Cart';
@@ -18,24 +17,22 @@ import Register from './pages/Register';
 
 function App() {
   return (
-    <Provider store={store}>
-      <div className="App primary-background">
-        <NavbarCommon />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/product" element={<Product />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/user/info" element={<UserInfo />} />
-          <Route path="/intro" element={<Intro />} />
-          <Route path="/product/detail/:id" element={<DetailProduct />} />
-          <Route path="/news/detail/:id" element={<DetailNews />} />
-        </Routes>
-      </div>
-    </Provider>
+    <div className="App primary-background">
+      <NavbarCommon />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/product" element={<Product />} />
+        <Route path="/news" element={<News />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/user/info" element={<UserInfo />} />
+        <Route path="/intro" element={<Intro />} />
+        <Route path="/product/detail/:id" element={<DetailProduct />} />
+        <Route path="/news/detail/:id" element={<DetailNews />} />
+      </Routes>
+    </div>
   );
 }
 

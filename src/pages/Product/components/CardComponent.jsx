@@ -6,8 +6,11 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import ProductImage from '../../../images/product.png';
 import Button from 'react-bootstrap/Button';
+import { Link, useParams } from "react-router-dom";
+
 export default function CardComponent(props) {
-    const { dataItem, hello } = props;
+
+    const { dataItem, handleOpenEditModal, isShowBtn = true, handleDelete } = props;
     return (
         <div className="card">
             <div className="p-3">
@@ -17,12 +20,18 @@ export default function CardComponent(props) {
                 <div className="card-image">
                     <img src={dataItem?.image} alt="" />
                 </div>
-                <h4 className="my-3">{dataItem?.productName}</h4>
+                <Link to={`/product/detail/${dataItem?._id}`} style={{ textDecoration: 'none' }}>
+                    <h4 className="text-dark my-3" >{dataItem?.productName}</h4>
+                </Link>
                 <p>${dataItem?.price}</p>
-                <span>
+                {isShowBtn && <span>
                     <ControlPointIcon />
-                </span>
+                </span>}
             </div>
+            {isShowBtn && <div className="d-flex justify-content-center mb-3">
+                <Button className="btn-bold me-2" onClick={() => handleOpenEditModal(dataItem?._id)}>Edit</Button>
+                <Button className="btn-pri ms-2" onClick={() => handleDelete(dataItem?._id)}>Delete</Button>
+            </div>}
         </div>
     )
 }

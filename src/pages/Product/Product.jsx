@@ -10,40 +10,162 @@ import { useState } from 'react';
 import CardComponent from './components/CardComponent'
 import { dataSample } from './data'
 import { useEffect } from 'react'
+import Form from 'react-bootstrap/Form';
+import FormModal from './components/FormModal'
+import {
+  fetchCreateProduct, fetchDeleteProductApi, fetchListProductsApi, fetchRelatedListProductsApi,
+  fetchInfoProductApi, fetchEditProduct,
+} from '../../api/productsAPI';
+import EditModal from './components/EditModal'
+const initFilters = {
+  search: '',
+  sort: '',
+}
+const initialValue = {
+  productName: '',
+  description: '',
+  category: '',
+  price: '',
+  image: '',
+  details: '',
+  subImage1: '',
+  subImage2: '',
+  subImage3: '',
+}
+const initialEditValue = {
+  productName: '',
+  description: '',
+  category: '',
+  price: '',
+  image: '',
+  details: '',
+  subImage1: '',
+  subImage2: '',
+  subImage3: '',
+  productObjId: '',
+}
 function Product() {
   const [show, setShow] = useState(false);
   const [oatList, setOatList] = useState([]);
   const [ampouleList, setAmpouleList] = useState([]);
   const [relatedList, setRelatedList] = useState([]);
+  const [filters, setFilters] = useState(initFilters);
+  const [createParams, setCreateParams] = useState(initialValue);
+  const [editParams, setEditParams] = useState(initialValue);
+  const [showEdit, setShowEdit] = useState(false);
+  const [reset, setReset] = useState(false);
+
   useEffect(() => {
-    setOatList(dataSample.filter(pro => pro.category === 'Oat Collection'));
-  }, [])
+    async function fetchData() {
+      const result = await fetchListProductsApi(
+        filters,
+      );
+      if (result?.data?.success) {
+        setOatList(result?.data?.data.filter(pro => pro.category === 'Oat Collection'));
+        setAmpouleList(result?.data?.data.filter(pro => pro.category === 'Ampoule Collection'));
+      }
+    }
+    fetchData();
+  }, [filters, reset])
+
   useEffect(() => {
-    setAmpouleList(dataSample.filter(pro => pro.category === 'Ampoule Collection'));
-  }, [dataSample])
-  useEffect(() => {
-    setRelatedList(dataSample.filter(pro => pro.category === 'Ampoule Collection'));
-  }, [dataSample])
+    async function fetchData() {
+      const result = await fetchRelatedListProductsApi({});
+      if (result?.data?.success) {
+        setRelatedList(result?.data?.data?.items);
+      }
+    }
+    fetchData();
+  }, [reset])
+  //create
   const handleCloseModal = () => {
+    setCreateParams(initialValue);
     setShow(false);
   }
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    await fetchCreateProduct(createParams);
+    console.log(createParams, 'createParams');
+    setReset((prev) => !prev);
     setShow(false);
+    setCreateParams(initialValue);
   }
   const handleOpenModal = () => {
     setShow(true);
+  }
+
+  const handleOnChange = (event) => {
+    setCreateParams({
+      ...createParams,
+      [event.target.name]: event.target.value,
+    })
+  }
+  // handle edit
+  const handleCloseEditModal = () => {
+    setEditParams(initialEditValue);
+    setShowEdit(false);
+  }
+  const handleSubmitEdit = async () => {
+    await fetchEditProduct(editParams);
+    setReset((prev) => !prev);
+    setShowEdit(false);
+    setEditParams(initialEditValue);
+  }
+  const handleOpenEditModal = async (productObjId) => {
+    const result = await fetchInfoProductApi(productObjId)
+    if (result?.data?.success) {
+      setEditParams({
+        ...result.data.data,
+        productObjId: productObjId,
+      })
+    }
+    setShowEdit(true);
+  }
+  const handleOnChangeEdit = (event) => {
+    setEditParams({
+      ...editParams,
+      [event.target.name]: event.target.value,
+    })
+  }
+
+  // delete
+  const handleDelete = async (productObjId) => {
+    await fetchDeleteProductApi({ productObjId });
+    setReset((prev) => !prev);
   }
   return (
     <div className='product primary-background'>
       <Container>
         <Row className="mb-4">
-          <h3 className="black-color">OAT COLLECTION</h3>
+          <Col sm={5}>
+            <h3 className="black-color">OAT COLLECTION</h3>
+          </Col>
+          <Col sm={5}>
+            <Form.Select
+              onChange={(event) => setFilters({
+                ...filters,
+                sort: event.target.value,
+              })}
+              aria-label="Default select example">
+              <option
+              >Sort by
+              </option>
+              <option value="1">Sort price - High to Low</option>
+              <option value="2">Sort price - Low to high</option>
+            </Form.Select>
+          </Col>
+          <Col sm={2}>
+            <div className="text-end">
+              <button className="btn-bold" onClick={() => handleOpenModal()}>Create</button>
+            </div>
+          </Col>
           <Container>
             <Row>
               {oatList.map((dataItem, index) => {
                 return <Col sm={3} key={index} className="mt-4">
                   <CardComponent
+                    handleOpenEditModal={handleOpenEditModal}
                     dataItem={dataItem}
+                    handleDelete={handleDelete}
                   />
                 </Col>
               })}
@@ -84,7 +206,21 @@ function Product() {
         </Container>
       </Container>
       <Footer />
-    </div>
+      <FormModal
+        show={show}
+        handleCloseModal={handleCloseModal}
+        handleSubmit={handleSubmit}
+        handleOnChange={handleOnChange}
+        createParams={createParams}
+      />
+      <EditModal
+        show={showEdit}
+        handleCloseModal={handleCloseEditModal}
+        handleSubmit={handleSubmitEdit}
+        handleOnChange={handleOnChangeEdit}
+        params={editParams}
+      />
+    </div >
   )
 }
 
