@@ -38,26 +38,23 @@ function NavbarCommon() {
                   <Nav.Link href="">
                     <Link to="/product" className="text-dark" style={{ textDecoration: 'none' }}>Products</Link>
                   </Nav.Link>
-                  <Nav.Link>
-                    <Link to="/product" className="text-dark" style={{ textDecoration: 'none' }}>Contacts</Link>
-                  </Nav.Link>
                 </Nav>
               </Navbar.Collapse>
             </Col>
             <Col sm={6} >
               <Nav className="text-end" style={{ justifyContent: 'end' }}>
                 <Nav.Item>
-                  <Nav.Link href="/home">
+                  <Nav.Link href="/user/info">
                     <PermIdentityIcon className="text-dark" />
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link href="/home">
+                  <Nav.Link href="/product">
                     <FavoriteBorderIcon className="text-dark" />
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link href="/home">
+                  <Nav.Link href="/cart">
                     <ShoppingCartIcon className="text-dark" />
                   </Nav.Link>
                 </Nav.Item>
