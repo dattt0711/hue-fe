@@ -33,6 +33,7 @@ function Login() {
         const result = await fetchLogin(params);
         if (result?.data?.success) {
             navigate('/');
+            localStorage.setItem("USERS", JSON.stringify(result?.data?.data))
         } else {
             setShow(true);
             setMessage(result.data.message);

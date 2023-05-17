@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../Home/components/Footer'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -7,7 +7,26 @@ import Form from 'react-bootstrap/Form';
 import './styles.css'
 import ProductImage from '../../images/product.png';
 import Button from 'react-bootstrap/Button';
+import {
+    fetchListCartsApi,
+} from '../../api/cartsAPI';
 function Cart() {
+    const [listProducts, setListProducts] = useState([]);
+    useEffect(() => {
+        async function fetchAPI() {
+            const userInfo = JSON.parse(localStorage.getItem("USERS"));
+            const userObjId = userInfo?._id;
+            if (userObjId) {
+                const result = await fetchListCartsApi({
+                    userObjId: userObjId,
+                })
+                if (result?.data?.success) {
+                    setListProducts(result.data.data.productObjIds);
+                }
+            }
+        }
+        fetchAPI();
+    }, [])
     return (
         <div className="cart">
             <Container>
@@ -67,40 +86,27 @@ function Cart() {
                     <Col sm={6}>
                         <div>
                             <h3 className="black-color mb-4">YOUR ORDER</h3>
-                            <Container className="order-item pt-3 pb-3">
-                                <Row>
-                                    <Col sm={3}>
-                                        <div className="order-image-product d-flex justify-content-center align-items-center p-3">
-                                            <img src={ProductImage} alt="" />
-                                        </div>
-                                    </Col>
-                                    <Col sm={9}>
-                                        <h4 className="black-color">Oat Essential Water</h4>
-                                        <div className="d-flex justify-content-between black-color">
-                                            <span>Price</span>
-                                            <span>$49.98</span>
-                                        </div>
-                                        <p className="black-color">Quantity: 1</p>
-                                    </Col>
-                                </Row>
-                            </Container>
-                            <Container className="order-item pt-3 pb-3">
-                                <Row>
-                                    <Col sm={3}>
-                                        <div className="order-image-product d-flex justify-content-center align-items-center p-3">
-                                            <img src={ProductImage} alt="" />
-                                        </div>
-                                    </Col>
-                                    <Col sm={9}>
-                                        <h4 className="black-color">Oat Essential Water</h4>
-                                        <div className="d-flex justify-content-between black-color">
-                                            <span>Price</span>
-                                            <span>$49.98</span>
-                                        </div>
-                                        <p className="black-color">Quantity: 1</p>
-                                    </Col>
-                                </Row>
-                            </Container>
+                            {listProducts.map((pro, index) => {
+                                return (
+                                    <Container className="order-item pt-3 pb-3" key={index}>
+                                        <Row>
+                                            <Col sm={3}>
+                                                <div className="order-image-product d-flex justify-content-center align-items-center p-3">
+                                                    <img src={pro?.productObjId?.image} alt="" />
+                                                </div>
+                                            </Col>
+                                            <Col sm={9}>
+                                                <h4 className="black-color">{pro?.productObjId?.productName}</h4>
+                                                <div className="d-flex justify-content-between black-color">
+                                                    <span>Price</span>
+                                                    <span>$ {pro?.productObjId?.price}</span>
+                                                </div>
+                                                <p className="black-color">Quantity: {pro?.quantity}</p>
+                                            </Col>
+                                        </Row>
+                                    </Container>
+                                )
+                            })}
                             <Container className="total-price py-2">
                                 <Row className="black-color">
                                     <Col sm={6}>

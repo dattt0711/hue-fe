@@ -15,6 +15,9 @@ import {
   fetchInfoProductApi, fetchRelatedListProductsApi,
 } from '../../api/productsAPI';
 import {
+  fetchAddToCart,
+} from '../../api/cartsAPI';
+import {
   fetchCreateComment, fetchListCommentsApi,
 } from '../../api/commentsAPI';
 import { Link, useParams } from "react-router-dom";
@@ -44,7 +47,31 @@ function DetailProduct() {
   const [createParams, setCreateParams] = useState(initParams);
   const [reset, setReset] = useState(false);
   const [comments, setComments] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  //handle change quantity
+  const handleChangeQuantity = (type) => {
+    if (type === "plus") setQuantity(prev => prev + 1);
+    if (type === "minus") {
+      if (quantity > 1) {
+        setQuantity(prev => prev - 1);
+      }
+    }
+  }
 
+  const handleAddToCart = async (productObjId) => {
+    const userInfo = JSON.parse(localStorage.getItem("USERS"));
+    const userObjId = userInfo?._id;
+    if (userObjId) {
+      await fetchAddToCart({
+        userObjId: userObjId,
+        productObjIds: [{
+          productObjId: productObjId,
+          quantity: quantity,
+        }]
+      });
+      setQuantity(1);
+    }
+  }
   //create
   const handleCloseModal = () => {
     setCreateParams(initParams);
@@ -116,7 +143,12 @@ function DetailProduct() {
             <ImageInfo dataInfo={dataInfo} />
           </Col>
           <Col sm={6}>
-            <DetailInfo dataInfo={dataInfo} />
+            <DetailInfo
+              handleChangeQuantity={handleChangeQuantity}
+              quantity={quantity}
+              dataInfo={dataInfo}
+              handleAddToCart={handleAddToCart}
+            />
           </Col>
         </Row>
         <div className="mt-5">
