@@ -16,6 +16,9 @@ import {
   fetchCreateProduct, fetchDeleteProductApi, fetchListProductsApi, fetchRelatedListProductsApi,
   fetchInfoProductApi, fetchEditProduct,
 } from '../../api/productsAPI';
+import {
+  fetchAddToCart,
+} from '../../api/cartsAPI';
 import EditModal from './components/EditModal'
 const initFilters = {
   search: '',
@@ -132,6 +135,20 @@ function Product() {
     await fetchDeleteProductApi({ productObjId });
     setReset((prev) => !prev);
   }
+  // handle Add to Cart
+  const handleAddToCart = async (productObjId, qty) => {
+    const userInfo = JSON.parse(localStorage.getItem("USERS"));
+    const userObjId = userInfo?._id;
+    if (userObjId) {
+      await fetchAddToCart({
+        userObjId: userObjId,
+        productObjIds: [{
+          productObjId: productObjId,
+          quantity: qty,
+        }]
+      });
+    }
+  }
   return (
     <div className='product primary-background'>
       <Container>
@@ -179,6 +196,7 @@ function Product() {
               {ampouleList.map((dataItem, index) => {
                 return <Col sm={3} key={index} className="mt-4">
                   <CardComponent
+                    handleAddToCart={handleAddToCart}
                     dataItem={dataItem}
                   />
                 </Col>
@@ -196,6 +214,7 @@ function Product() {
                 {relatedList.map((dataItem, index) => {
                   return <Col sm={3} key={index} className="mt-4">
                     <CardComponent
+                      handleAddToCart={handleAddToCart}
                       dataItem={dataItem}
                     />
                   </Col>

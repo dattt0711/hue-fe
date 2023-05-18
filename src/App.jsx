@@ -25,12 +25,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/product" element={<Product />} />
-        <Route path="/news" element={<News />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/user/info" element={<UserInfo />} />
-        <Route path="/intro" element={<Intro />} />
         <Route path="/product/detail/:id" element={<DetailProduct />} />
-        <Route path="/news/detail/:id" element={<DetailNews />} />
       </Routes>
     </div>
   );

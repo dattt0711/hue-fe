@@ -10,8 +10,27 @@ import Button from 'react-bootstrap/Button';
 import {
     fetchListCartsApi,
 } from '../../api/cartsAPI';
+const initParams = {
+    fullName: '',
+    email: '',
+    phone: '',
+    country: '',
+    city: '',
+    district: '',
+}
 function Cart() {
     const [listProducts, setListProducts] = useState([]);
+    const [params, setParams] = useState(initParams);
+
+    const handleOnChange = (event) => {
+        setParams({
+            ...params,
+            [event.target.name]: event.target.value,
+        })
+    }
+    const handleSubmit = () => {
+        console.log(params, 'params')
+    }
     useEffect(() => {
         async function fetchAPI() {
             const userInfo = JSON.parse(localStorage.getItem("USERS"));
@@ -38,7 +57,13 @@ function Cart() {
                                 <Col sm={6}>
                                     <Form.Group className="mb-3 black-color" controlId="formBasicEmail">
                                         <Form.Label>Full Name</Form.Label>
-                                        <Form.Control type="text" placeholder="Enter full name" />
+                                        <Form.Control
+
+                                            type="text" placeholder="Enter full name"
+                                            name="fullName"
+                                            onChange={(event) => handleOnChange(event)}
+                                            value={params?.fullName}
+                                        />
                                     </Form.Group>
                                 </Col>
                                 <Col sm={6}>
@@ -46,13 +71,22 @@ function Cart() {
                                 <Col sm={6}>
                                     <Form.Group className="mb-3 black-color" controlId="formBasicEmail">
                                         <Form.Label>E-mail</Form.Label>
-                                        <Form.Control type="email" placeholder="Enter email" />
+                                        <Form.Control
+                                            name="email"
+                                            onChange={(event) => handleOnChange(event)}
+                                            value={params?.email}
+                                            type="email" placeholder="Enter email" />
                                     </Form.Group>
                                 </Col>
                                 <Col sm={6}>
                                     <Form.Group className="mb-3 black-color" controlId="formBasicEmail">
                                         <Form.Label>Phone</Form.Label>
-                                        <Form.Control type="phone" placeholder="Enter phone" />
+                                        <Form.Control
+                                            name="phone"
+                                            onChange={(event) => handleOnChange(event)}
+                                            value={params?.phone}
+                                            type="phone"
+                                            placeholder="Enter phone" />
                                     </Form.Group>
                                 </Col>
                             </Row>
@@ -63,19 +97,31 @@ function Cart() {
                                 <Col sm={6}>
                                     <Form.Group className="mb-3 black-color" controlId="formBasicEmail">
                                         <Form.Label>Country</Form.Label>
-                                        <Form.Control type="text" placeholder="Enter country" />
+                                        <Form.Control type="text" placeholder="Enter country"
+                                            name="country"
+                                            onChange={(event) => handleOnChange(event)}
+                                            value={params?.country}
+                                        />
                                     </Form.Group>
                                 </Col>
                                 <Col sm={6}>
                                     <Form.Group className="mb-3 black-color" controlId="formBasicEmail">
                                         <Form.Label>City</Form.Label>
-                                        <Form.Control type="text" placeholder="Enter city" />
+                                        <Form.Control type="text" placeholder="Enter city"
+                                            name="city"
+                                            onChange={(event) => handleOnChange(event)}
+                                            value={params?.city}
+                                        />
                                     </Form.Group>
                                 </Col>
                                 <Col sm={6}>
                                     <Form.Group className="mb-3 black-color" controlId="formBasicEmail">
                                         <Form.Label>District</Form.Label>
-                                        <Form.Control type="text" placeholder="Enter district" />
+                                        <Form.Control type="text" placeholder="Enter district"
+                                            name="district"
+                                            onChange={(event) => handleOnChange(event)}
+                                            value={params?.district}
+                                        />
                                     </Form.Group>
                                 </Col>
                                 <Col sm={6}>
@@ -137,7 +183,7 @@ function Cart() {
                     </Col>
                     <Col sm={6}>
                         <div className="d-grid gap-2 mt-4">
-                            <Button className="btn-payment" variant="secondary">Complete Payment</Button>
+                            <Button className="btn-payment" variant="secondary" onClick={handleSubmit}>Complete Payment</Button>
                         </div>
                     </Col>
                 </Row>

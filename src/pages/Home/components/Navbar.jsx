@@ -38,6 +38,9 @@ function NavbarCommon() {
                   <Nav.Link href="">
                     <Link to="/product" className="text-dark" style={{ textDecoration: 'none' }}>Products</Link>
                   </Nav.Link>
+                  <Nav.Link href="">
+                    <Link to="/contact" className="text-dark" style={{ textDecoration: 'none' }}>Contacts</Link>
+                  </Nav.Link>
                 </Nav>
               </Navbar.Collapse>
             </Col>

@@ -10,7 +10,7 @@ import { Link, useParams } from "react-router-dom";
 
 export default function CardComponent(props) {
 
-    const { dataItem, handleOpenEditModal, isShowBtn = true, handleDelete } = props;
+    const { dataItem, handleOpenEditModal, isShowBtn = true, handleDelete, handleAddToCart } = props;
     return (
         <div className="card">
             <div className="p-3">
@@ -24,7 +24,7 @@ export default function CardComponent(props) {
                     <h4 className="text-dark my-3" >{dataItem?.productName}</h4>
                 </Link>
                 <p>${dataItem?.price}</p>
-                {isShowBtn && <span>
+                {isShowBtn && <span onClick={() => handleAddToCart(dataItem?._id, 1)}>
                     <ControlPointIcon />
                 </span>}
             </div>
