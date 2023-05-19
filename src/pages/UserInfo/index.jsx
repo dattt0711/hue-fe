@@ -13,6 +13,7 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { Link } from 'react-router-dom';
 function UserInfo() {
     return (
         <div>
@@ -31,16 +32,22 @@ function UserInfo() {
                             <span>PERSONAL INFO</span>
                         </div>
                         <div className="black-color border-bottom ps-2 pb-2 mt-3">
-                            <ShoppingCartIcon className="me-2" />
-                            <span>MY CART</span>
+                            <Link to="/cart" className="text-dark" style={{ textDecoration: 'none' }}>
+                                <ShoppingCartIcon className="me-2" />
+                                <span>MY CART</span>
+                            </Link>
                         </div>
                         <div className="black-color border-bottom ps-2 pb-2 mt-3">
-                            <EventNoteIcon className="me-2" />
-                            <span>MY ORDER</span>
+                            <Link to="/order" className="text-dark" style={{ textDecoration: 'none' }}>
+                                <EventNoteIcon className="me-2" />
+                                <span>MY ORDER</span>
+                            </Link>
                         </div>
                         <div className="black-color border-bottom ps-2 pb-2 mt-3">
-                            <FavoriteBorderIcon className="me-2" />
-                            <span>FAVOURITES</span>
+                            <Link to="/product" className="text-dark" style={{ textDecoration: 'none' }}>
+                                <FavoriteBorderIcon className="me-2" />
+                                <span>FAVOURITES</span>
+                            </Link>
                         </div>
                         <div className="black-color border-bottom ps-2 pb-2 mt-3">
                             <LogoutIcon className="me-2" />

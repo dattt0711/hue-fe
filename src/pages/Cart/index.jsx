@@ -10,6 +10,9 @@ import Button from 'react-bootstrap/Button';
 import {
     fetchListCartsApi,
 } from '../../api/cartsAPI';
+import {
+    fetchPaymentApi,
+} from '../../api/ordersAPI';
 const initParams = {
     fullName: '',
     email: '',
@@ -21,15 +24,38 @@ const initParams = {
 function Cart() {
     const [listProducts, setListProducts] = useState([]);
     const [params, setParams] = useState(initParams);
-
+    const [reset, setReset] = useState(false);
+    const [totalPrice, setTotalPrice] = useState(0);
     const handleOnChange = (event) => {
         setParams({
             ...params,
             [event.target.name]: event.target.value,
         })
     }
-    const handleSubmit = () => {
-        console.log(params, 'params')
+    const handleSubmit = async () => {
+        const userInfo = JSON.parse(localStorage.getItem("USERS"));
+        const userObjId = userInfo?._id;
+        if (userObjId && listProducts) {
+            const productObjIds = listProducts.map((product) => {
+                return {
+                    productObjId: product?.productObjId?._id,
+                    quantity: product?.quantity,
+                }
+            })
+            const totalPrice = listProducts.reduce((prev, curr) => {
+                prev = prev + +curr?.productObjId?.price * +curr?.quantity;
+                return prev;
+            }, 0)
+            await fetchPaymentApi({
+                ...params,
+                productObjIds: productObjIds,
+                userObjId: userObjId,
+                totalPrice: totalPrice,
+            })
+            setReset((prev) => !prev);
+            setParams(initParams);
+        }
+
     }
     useEffect(() => {
         async function fetchAPI() {
@@ -45,7 +71,17 @@ function Cart() {
             }
         }
         fetchAPI();
-    }, [])
+    }, [reset])
+    useEffect(() => {
+        if (listProducts?.length > 0) {
+            const price = listProducts.reduce((prev, curr) => {
+                prev = prev + +curr?.productObjId?.price;
+                return prev;
+            }, 0)
+            setTotalPrice(price);
+        }
+    }, [listProducts])
+
     return (
         <div className="cart">
             <Container>
@@ -153,7 +189,7 @@ function Cart() {
                                     </Container>
                                 )
                             })}
-                            <Container className="total-price py-2">
+                            {/* <Container className="total-price py-2">
                                 <Row className="black-color">
                                     <Col sm={6}>
                                         Shipping
@@ -168,14 +204,14 @@ function Cart() {
                                         $119.96
                                     </Col>
                                 </Row>
-                            </Container>
+                            </Container> */}
                             <Container>
                                 <Row className="black-color">
                                     <Col sm={6} className="fw-bold">
                                         TOTAL
                                     </Col>
                                     <Col sm={6} className="fw-bold text-end">
-                                        $124.96
+                                        ${totalPrice}
                                     </Col>
                                 </Row>
                             </Container>

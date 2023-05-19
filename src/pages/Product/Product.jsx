@@ -180,6 +180,7 @@ function Product() {
               {oatList.map((dataItem, index) => {
                 return <Col sm={3} key={index} className="mt-4">
                   <CardComponent
+                    handleAddToCart={handleAddToCart}
                     handleOpenEditModal={handleOpenEditModal}
                     dataItem={dataItem}
                     handleDelete={handleDelete}

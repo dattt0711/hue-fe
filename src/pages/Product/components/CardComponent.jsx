@@ -24,8 +24,8 @@ export default function CardComponent(props) {
                     <h4 className="text-dark my-3" >{dataItem?.productName}</h4>
                 </Link>
                 <p>${dataItem?.price}</p>
-                {isShowBtn && <span onClick={() => handleAddToCart(dataItem?._id, 1)}>
-                    <ControlPointIcon />
+                {isShowBtn && <span >
+                    <ControlPointIcon onClick={() => handleAddToCart(dataItem?._id, 1)} />
                 </span>}
             </div>
             {isShowBtn && <div className="d-flex justify-content-center mb-3">

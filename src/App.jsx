@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from "react-redux";
 import Product from './pages/Product/Product';
 import Cart from './pages/Cart';
+import Order from './pages/Order';
 import News from './pages/News/News';
 import Contact from './pages/Contact/Contact';
 import Intro from './pages/Intro/Intro';
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/order" element={<Order />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/product" element={<Product />} />
