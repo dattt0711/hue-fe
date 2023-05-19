@@ -90,7 +90,7 @@ function Login() {
                                 </div>
                                 <div className="text-center d-flex flex-column">
                                     <a className="link-login mt-3">Forgot your password?</a>
-                                    <a className="link-login mt-3">New User Registration</a>
+                                    <a className="link-login mt-3" onClick={() => { navigate('/register') }}>New User Registration</a>
                                 </div>
                             </Col>
                             <Col sm={3}></Col>
