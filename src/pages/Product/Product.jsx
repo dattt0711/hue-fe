@@ -71,9 +71,11 @@ function Product() {
     fetchData();
     const userInfo = JSON.parse(localStorage.getItem("USERS"));
     const isAdminCheck = userInfo?.isAdmin;
+    console.log(isAdminCheck, 'isAdminCheck')
+    console.log(userInfo?.isAdmin, 'userInfo?.isAdmin')
     if (isAdminCheck) setIsAdmin(true);
   }, [filters, reset])
-
+  console.log('isAdmin', isAdmin)
   useEffect(() => {
     async function fetchData() {
       const result = await fetchRelatedListProductsApi({});
