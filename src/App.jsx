@@ -15,6 +15,7 @@ import DetailNews from './pages/DetailNews/DetailNews';
 import UserInfo from './pages/UserInfo';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ProtectedRoute from './pages/ProtectedRoute';
 
 function App() {
   return (
@@ -22,14 +23,14 @@ function App() {
       <NavbarCommon />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/order" element={<Order />} />
+        <Route path="/cart" element={<ProtectedRoute component={Cart} />} />
+        <Route path="/order" element={<ProtectedRoute component={Order} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/product" element={<Product />} />
+        <Route path="/product" element={<ProtectedRoute component={Product} />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/user/info" element={<UserInfo />} />
-        <Route path="/product/detail/:id" element={<DetailProduct />} />
+        <Route path="/user/info" element={<ProtectedRoute component={UserInfo} />} />
+        <Route path="/product/detail/:id" element={<ProtectedRoute component={DetailProduct} />} />
       </Routes>
     </div>
   );
