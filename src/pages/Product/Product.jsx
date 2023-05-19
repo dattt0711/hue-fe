@@ -57,7 +57,7 @@ function Product() {
   const [editParams, setEditParams] = useState(initialValue);
   const [showEdit, setShowEdit] = useState(false);
   const [reset, setReset] = useState(false);
-
+  const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     async function fetchData() {
       const result = await fetchListProductsApi(
@@ -69,6 +69,9 @@ function Product() {
       }
     }
     fetchData();
+    const userInfo = JSON.parse(localStorage.getItem("USERS"));
+    const isAdminCheck = userInfo?.isAdmin;
+    if (isAdminCheck) setIsAdmin(true);
   }, [filters, reset])
 
   useEffect(() => {
@@ -87,7 +90,6 @@ function Product() {
   }
   const handleSubmit = async () => {
     await fetchCreateProduct(createParams);
-    console.log(createParams, 'createParams');
     setReset((prev) => !prev);
     setShow(false);
     setCreateParams(initialValue);
@@ -172,7 +174,7 @@ function Product() {
           </Col>
           <Col sm={2}>
             <div className="text-end">
-              <button className="btn-bold" onClick={() => handleOpenModal()}>Create</button>
+              {isAdmin && <button className="btn-bold" onClick={() => handleOpenModal()}>Create</button>}
             </div>
           </Col>
           <Container>
@@ -180,6 +182,7 @@ function Product() {
               {oatList.map((dataItem, index) => {
                 return <Col sm={3} key={index} className="mt-4">
                   <CardComponent
+                    isAdmin={isAdmin}
                     handleAddToCart={handleAddToCart}
                     handleOpenEditModal={handleOpenEditModal}
                     dataItem={dataItem}
@@ -197,8 +200,11 @@ function Product() {
               {ampouleList.map((dataItem, index) => {
                 return <Col sm={3} key={index} className="mt-4">
                   <CardComponent
+                    isAdmin={isAdmin}
+                    handleOpenEditModal={handleOpenEditModal}
                     handleAddToCart={handleAddToCart}
                     dataItem={dataItem}
+                    handleDelete={handleDelete}
                   />
                 </Col>
               })}
@@ -215,8 +221,11 @@ function Product() {
                 {relatedList.map((dataItem, index) => {
                   return <Col sm={3} key={index} className="mt-4">
                     <CardComponent
+                      isAdmin={isAdmin}
                       handleAddToCart={handleAddToCart}
                       dataItem={dataItem}
+                      handleDelete={handleDelete}
+                      handleOpenEditModal={handleOpenEditModal}
                     />
                   </Col>
                 })}

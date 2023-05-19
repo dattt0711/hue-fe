@@ -10,7 +10,7 @@ import { Link, useParams } from "react-router-dom";
 
 export default function CardComponent(props) {
 
-    const { dataItem, handleOpenEditModal, isShowBtn = true, handleDelete, handleAddToCart } = props;
+    const { isAdmin = true, dataItem, handleOpenEditModal, isShowBtn = true, handleDelete, handleAddToCart } = props;
     return (
         <div className="card">
             <div className="p-3">
@@ -29,8 +29,8 @@ export default function CardComponent(props) {
                 </span>}
             </div>
             {isShowBtn && <div className="d-flex justify-content-center mb-3">
-                <Button className="btn-bold me-2" onClick={() => handleOpenEditModal(dataItem?._id)}>Edit</Button>
-                <Button className="btn-pri ms-2" onClick={() => handleDelete(dataItem?._id)}>Delete</Button>
+                {isAdmin && <Button className="btn-bold me-2" onClick={() => handleOpenEditModal(dataItem?._id)}>Edit</Button>}
+                {isAdmin && <Button className="btn-pri ms-2" onClick={() => handleDelete(dataItem?._id)}>Delete</Button>}
             </div>}
         </div>
     )
