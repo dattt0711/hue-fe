@@ -4,8 +4,6 @@ import { Button, Container } from 'react-bootstrap';
 import DetailInfo from './components/DetailInfo';
 import ImageInfo from './components/ImageInfo';
 import FormModal from './components/FormModal';
-import Description from './components/Description';
-import CarouselProduct from '../Home/components/CarouselProduct';
 import Footer from '../Home/components/Footer';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
